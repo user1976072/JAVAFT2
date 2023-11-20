@@ -1,41 +1,42 @@
-import Fam_Tree.Human.Gender;
-import Fam_Tree.Human.Human;
-//import Fam_Tree.Writer.FileHandler;
-import Fam_Tree.Fam_tree.FamilyTree;
+import Model.Human.Gender;
+import Model.Human.Human;
+import Model.Writer.FileHandler;
+import Model.Service.Service;
 
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.List;
 
 
 public class Main {
     public static void main(String[] args) {
-//        String file = "scr/Fam_Tree/Writer/FTree.txt";
-        FamilyTree tree = testTree();//load();
+//        String filePath = "src/Fam_Tree/Writer/FTree.txt";
+        Service tree = testTree();
+//        FamilyTree tree = load();
 //        System.out.println(tree);
 
-//        save(tree);
-        tree.SortByName();
+        save(tree);
+        tree.sortByName();
         System.out.println(tree);
         System.out.println("-".repeat(16));
-        tree.SortByAge();
+        tree.sortByAge();
         System.out.println(tree);
     }
-//    private static FamilyTree load() {
-//            FileHandler fileHand = new FileHandler();
-//            String file = "scr/Fam_Tree/Writer/FTree.txt";
-//            return (FamilyTree) fileHand.read(file);
-//    }
-//        Fam_Tree.Writer.FileHandler fileHand = new Fam_Tree.Writer.FileHandler();
-//        fileHand.save(tree, file);
-//        fileHand.read(file);
-//    private static void save (FamilyTree tree) {
-//        FileHandler fileHand = new FileHandler();
-//        String file = "scr/Fam_Tree/Writer/FTree.txt";
-//        fileHand.save(tree, file);
-//    }
-    static FamilyTree testTree() {
-        FamilyTree tree = new FamilyTree();
+    private static Service load() {
+        FileHandler fileHand = new FileHandler();
+        String filePath = "scr/Fam_Tree/Writer/FTree.txt";
+        return (Service) fileHand.read(filePath);
+    }
+
+    private static void save (Service tree) {
+        FileHandler fileHand = new FileHandler();
+        String filePath = "scr/Fam_Tree/Writer/FTree.txt";
+        fileHand.save(tree, filePath);
+    }
+//    Fam_Tree.Writer.FileHandler fileHand = new Fam_Tree.Writer.FileHandler();
+//        fileHand.save(tree, filePath);
+//        fileHand.read(filePath);
+
+    static Service testTree() {
+        Service tree = new Service();
 
         Human ivan = new Human("Иван", Gender.Male, LocalDate.of(1919,12,12));
         Human elena = new Human("Елена", Gender.Female, LocalDate.of(1920,1,23));

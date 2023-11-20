@@ -1,4 +1,7 @@
-package Fam_Tree.Human;
+package Model.Human;
+
+import Model.Service.Service;
+import Model.Service.TreeInterface;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -30,13 +33,9 @@ public class Human implements Serializable {
         children = new ArrayList<>();
     }
 
-    public long getId() {
-        return id;
-    }
+    public long getId() {return id;}
 
-    public void setId(long id) {
-        this.id = id;
-    }
+    public void setId(long id) {this.id = id;}
 
     public String getName() {
         return name;
@@ -214,10 +213,4 @@ public class Human implements Serializable {
         Human human = (Human) obj;
         return human.getId() == getId();
     }
-
-//    @Override
-//    public int compareTo(Human o) {
-//        return name.compareTo(o.getName);
-//    }
-
 }
