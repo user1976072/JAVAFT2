@@ -1,9 +1,7 @@
 package Presenter;
 
 import Model.Human.Gender;
-import Model.Human.Human;
-import Model.Service.Service;
-
+import Model.Service;
 
 import javax.swing.text.View;
 import java.time.LocalDate;
@@ -18,8 +16,10 @@ public class Presenter  {
     }
 
     public void addMembers(String name, Gender gender, LocalDate birthdate) {
-        service.addMembers();
-        getInfoTree();
+        if(service.addMembers(name, gender, birthdate)){
+            getInfoTree();
+        } else {view.printAnswer("Ошибка при добавлении");}
+
     }
 
 //    private void setWeddings() {

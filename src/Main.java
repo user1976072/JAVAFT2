@@ -1,7 +1,7 @@
 import Model.Human.Gender;
 import Model.Human.Human;
 import Model.Writer.FileHandler;
-import Model.Service.Service;
+import Model.FamTree.FamTree;
 
 import java.time.LocalDate;
 
@@ -9,7 +9,7 @@ import java.time.LocalDate;
 public class Main {
     public static void main(String[] args) {
 //        String filePath = "src/Fam_Tree/Writer/FTree.txt";
-        Service tree = testTree();
+        FamTree tree = testTree();
 //        FamilyTree tree = load();
 //        System.out.println(tree);
 
@@ -20,13 +20,13 @@ public class Main {
         tree.sortByAge();
         System.out.println(tree);
     }
-    private static Service load() {
+    private static FamTree load() {
         FileHandler fileHand = new FileHandler();
         String filePath = "scr/Fam_Tree/Writer/FTree.txt";
-        return (Service) fileHand.read(filePath);
+        return (FamTree) fileHand.read(filePath);
     }
 
-    private static void save (Service tree) {
+    private static void save (FamTree tree) {
         FileHandler fileHand = new FileHandler();
         String filePath = "scr/Fam_Tree/Writer/FTree.txt";
         fileHand.save(tree, filePath);
@@ -35,8 +35,8 @@ public class Main {
 //        fileHand.save(tree, filePath);
 //        fileHand.read(filePath);
 
-    static Service testTree() {
-        Service tree = new Service();
+    static FamTree testTree() {
+        FamTree tree = new FamTree();
 
         Human ivan = new Human("Иван", Gender.Male, LocalDate.of(1919,12,12));
         Human elena = new Human("Елена", Gender.Female, LocalDate.of(1920,1,23));

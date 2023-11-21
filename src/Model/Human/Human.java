@@ -1,8 +1,5 @@
 package Model.Human;
 
-import Model.Service.Service;
-import Model.Service.TreeInterface;
-
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;

@@ -1,6 +1,4 @@
-package Model.Service;
-
-import Model.Human.Human;
+package Model.FamTree;
 
 import java.util.Comparator;
 

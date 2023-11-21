@@ -1,6 +1,5 @@
-package Model.Service;
+package Model.FamTree;
 
-import Model.Human.Human;
 import java.util.Comparator;
 
 public class SortByAge<E extends TreeInterface<E>> implements Comparator<E> {

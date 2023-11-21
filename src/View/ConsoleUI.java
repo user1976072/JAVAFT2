@@ -14,7 +14,7 @@ public class ConsoleUI implements View {
 
     public ConsoleUI() {
         scanner = new Scanner(System.in);
-        presenter = new Presenter(this);
+        presenter = new Presenter();
         work = true;
         menu = new MainMenu(this);
     }

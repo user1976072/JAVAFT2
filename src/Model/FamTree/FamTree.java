@@ -1,14 +1,14 @@
-package Model.Service;
+package Model.FamTree;
 import java.io.Serializable;
 import java.util.*;
 
-public class Service<E extends TreeInterface<E>> implements Serializable, Iterable<E> {
+public class FamTree<E extends TreeInterface<E>> implements Serializable, Iterable<E> {
 
     private long humanId;
     public List<E> humanList;
 
-    public Service(){ this(new ArrayList<>()); }
-    public Service(List<E> humanList) { this.humanList = humanList;}
+    public FamTree(){ this(new ArrayList<>()); }
+    public FamTree(List<E> humanList) { this.humanList = humanList;}
 
     public long getHumanId() {
         return humanId;
