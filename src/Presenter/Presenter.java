@@ -2,9 +2,10 @@ package Presenter;
 
 import Model.Human.Gender;
 import Model.Service;
+import View.View;
 
-import javax.swing.text.View;
 import java.time.LocalDate;
+import java.util.List;
 
 public class Presenter  {
     private View view;
@@ -12,16 +13,22 @@ public class Presenter  {
 
     public Presenter(View view){
         this.view = view;
-        service = new Service();
+        this.service = new Service();
     }
 
-    public void addMembers(String name, Gender gender, LocalDate birthdate) {
-        if(service.addMembers(name, gender, birthdate)){
-            getInfoTree();
-        } else {view.printAnswer("Ошибка при добавлении");}
+//    public void addMembers(String name, Gender gender, LocalDate birthdate) {
+//        if(service.addMembers(name, gender, birthdate)){
+//            getInfoTree();
+//        } else {view.printAnswer("Ошибка при добавлении");}
+//
+//    }
 
+    public void findIdConnect(long childId, long parentId) {
+        List<String> connections = service.findIdConnect(childId, parentId);
+        for (String connection: connections) {
+            view.printAnswer(connection);
+        }
     }
-
 //    private void setWeddings() {
 //        service
 //        getInfoTree();

@@ -2,6 +2,8 @@ package View.Command;
 
 import View.ConsoleUI;
 
+import javax.swing.text.View;
+
 public abstract class Command {
     String description;
     ConsoleUI consoleUI;

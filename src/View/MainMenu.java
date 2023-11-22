@@ -11,7 +11,8 @@ public class MainMenu {
 
     public MainMenu(ConsoleUI consoleUI) {
         commandList = new ArrayList<>();
-        commandList.add(new AddMembers(consoleUI));
+        commandList.add(new FindIdConnect(consoleUI));
+//        commandList.add(new AddMembers(consoleUI));
         commandList.add(new GetInfoTree(consoleUI));
         commandList.add(new SortByAge(consoleUI));
         commandList.add(new SortByName(consoleUI));
@@ -22,10 +23,10 @@ public class MainMenu {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Список комманд:\n");
         for (int i = 0; i < commandList.size(); i++) {
-            stringBuilder.append(i+1);
+            stringBuilder.append(i);
             stringBuilder.append(". ");
             stringBuilder.append(commandList.get(i).getDescription());
-            stringBuilder.append("/n");
+            stringBuilder.append(" \n");
         }
         return stringBuilder.toString();
     }

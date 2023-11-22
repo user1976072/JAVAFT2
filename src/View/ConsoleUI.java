@@ -14,12 +14,12 @@ public class ConsoleUI implements View {
 
     public ConsoleUI() {
         scanner = new Scanner(System.in);
-        presenter = new Presenter();
+        presenter = new Presenter(this);
         work = true;
         menu = new MainMenu(this);
     }
 
-    @Override
+
     public void printAnswer(String text) {
         System.out.println(text);
     }
@@ -45,19 +45,23 @@ public class ConsoleUI implements View {
         presenter.sortByName();
     }
 
-
-    public void addMembers() {
-        System.out.println("Enter name your member's the family tree: ");
-        String name = scanner.nextLine();
-        System.out.println("Enter your gender: ");
-        Gender gender = Gender.valueOf(scanner.nextLine());
-        System.out.println("Enter LocalDate your member's the family tree: ");
-        LocalDate birthDate = LocalDate.parse(scanner.nextLine());
-        presenter.addMembers(name, gender, birthDate);
-
-
-
+    public void findIdConnect() {
+        System.out.println(" Введите идентификатор ребенка: ");
+        int childId = Integer.parseInt(scanner.nextLine());
+        System.out.println(" Введите идентификатор родителя: ");
+        int parentId = Integer.parseInt(scanner.nextLine());
+        presenter.findIdConnect(childId, parentId);
     }
+
+//    public void addMembers() {
+//        System.out.println("Enter name your member's the family tree: ");
+//        String name = scanner.nextLine();
+//        System.out.println("Enter your gender: ");
+//        Gender gender = Gender.valueOf(scanner.nextLine());
+//        System.out.println("Enter LocalDate your member's the family tree: ");
+//        LocalDate birthDate = LocalDate.parse(scanner.nextLine());
+//        presenter.addMembers(name, gender, birthDate);
+//    }
 
     public void getInfoTree() {
         presenter.getInfoTree();
