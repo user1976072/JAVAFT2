@@ -1,25 +1,23 @@
 package Presenter;
 
 import Model.FamTree.TreeInterface;
-import Model.Human.Gender;
 import Model.Human.Human;
 import Model.Service;
 import View.View;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public class Presenter<Human extends TreeInterface<Human>>  {
-    private View view;
-    private Service service;
+    private View<Human> view;
+    private Service<Human> service;
 
-    public Presenter(Service service, View view){
+    public Presenter(View<Human> view){
         this.view = view;
-        this.service = service;
+        this.service = new Service<>();
     }
 
-    public void addMembersToConsole(Model.Human.Human human) {
-        service.addMembers(human);
+    public void addMembers(Human human) {
+        service.addMembers((Model.Human.Human) human);
         if(human != null) {
             view.printAnswer("Человек добавлен");
         } else {view.printAnswer("Ошибка при добавлении");}

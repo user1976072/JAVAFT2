@@ -12,13 +12,13 @@ import java.util.Scanner;
 
 public class ConsoleUI<Human extends TreeInterface<Human>> implements View<Human> {
     private Scanner scanner;
-    private Presenter presenter;
+    private Presenter<Human> presenter;
     private boolean work;
     private MainMenu menu;
 
     public ConsoleUI() {
         scanner = new Scanner(System.in);
-        presenter = new Presenter(new Service<>(new FamTree<Human>(), scanner), this);
+        presenter = new Presenter(this);
         work = true;
         menu = new MainMenu(this);
     }
@@ -65,8 +65,8 @@ public class ConsoleUI<Human extends TreeInterface<Human>> implements View<Human
         Gender gender = Gender.valueOf(scanner.nextLine());
         System.out.println("Enter age your member's the family tree (ear-mm-dd): ");
         LocalDate birthdate = LocalDate.parse(scanner.nextLine());
-
-        presenter.addMembersToConsole(new Model.Human.Human(name, gender, birthdate));
+        Model.Human.Human human = new Model.Human.Human(name, gender, birthdate);
+        presenter.addMembers((Human) human);
 
     }
 
