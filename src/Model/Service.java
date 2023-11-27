@@ -3,33 +3,32 @@ package Model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 import Model.FamTree.FamTree;
 import Model.FamTree.TreeInterface;
-import Model.Human.Human;
 
 
+public class Service<Human extends TreeInterface<Human>> {
 
-public class Service<E extends TreeInterface<E>> {
+    private FamTree<Human> famTree;
+    private Scanner scanner;
+    private Model.Human.Human human;
 
-    private FamTree<E> famTree;
-    private Human human;
-
-    public Service(FamTree<E> famTree, Human human) {
+    public Service(FamTree<Human> famTree, Scanner scanner) {
         this.famTree = famTree;
+        this.scanner = scanner;
         this.human = human;
     }
 
-    public Service() {famTree = new FamTree<>();}
-
-//    public boolean addMembers(String name, Gender gender, LocalDate birthdate) {
-//        Human human = new Human(name, gender, birthdate);
-//        return famTree.addMembers((E) human);
+//    public Service() {
+//        famTree = new FamTree<>();
+////        this.human = new Model.Human.Human();
 //    }
 
     public List<String> findIdConnect(long childId, long parentId) {
-        E child = famTree.getById(childId);
-        E parent = famTree.getById(parentId);
+        Human child = famTree.getById(childId);
+        Human parent = famTree.getById(parentId);
 
         if (child != null && parent != null) {
             List<String> connections = new ArrayList<>();
@@ -43,7 +42,16 @@ public class Service<E extends TreeInterface<E>> {
         } else { return Collections.singletonList(" Идентификаторы неверны ");
         }
     }
-
+    public void addMembers(Model.Human.Human human) {
+//        System.out.println("Enter name your member's the family tree: ");
+//        String name = scanner.nextLine();
+//        System.out.println("Enter your gender (Male/Female): ");
+//        Gender gender = Gender.valueOf(scanner.nextLine());
+//        System.out.println("Enter age your member's the family tree (ear-mm-dd): ");
+//        LocalDate birthdate = LocalDate.parse(scanner.nextLine());
+//        Human human = (Human) new Model.Human.Human(name, gender, birthdate, null, null, null);
+        famTree.addMembers((Human) human);
+    }
 
     public void sortByName() {
         famTree.sortByName();
@@ -56,5 +64,6 @@ public class Service<E extends TreeInterface<E>> {
     public String getInfo() {
         return famTree.getInfo();
     }
+
 }
 

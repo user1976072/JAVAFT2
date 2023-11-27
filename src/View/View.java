@@ -1,11 +1,13 @@
 package View;
 
-public interface View {
+import Model.Human.Human;
+
+public interface View<Human> {
     void printAnswer(String text);
     void start();
     void findIdConnect();
-//    void addMembers();
-    void getInfoTree();
+    void addMembers();
+    void getInfo();
     void sortByName();
     void sortByAge();
 //    void setWeddings();

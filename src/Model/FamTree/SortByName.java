@@ -2,9 +2,9 @@ package Model.FamTree;
 
 import java.util.Comparator;
 
-public class SortByName<E extends TreeInterface<E>> implements Comparator<E> {
+public class SortByName<Human extends TreeInterface<Human>> implements Comparator<Human> {
 
-        public int compare(E o1, E o2) {
+        public int compare(Human o1, Human o2) {
             return o1.getName().compareTo(o2.getName());
     }
 }

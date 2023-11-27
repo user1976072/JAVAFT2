@@ -1,12 +1,16 @@
 package View;
 
+import Model.FamTree.FamTree;
+import Model.FamTree.TreeInterface;
 import Model.Human.Gender;
+import Model.Human.Human;
+import Model.Service;
 import Presenter.Presenter;
 
 import java.time.LocalDate;
 import java.util.Scanner;
 
-public class ConsoleUI implements View {
+public class ConsoleUI<Human extends TreeInterface<Human>> implements View<Human> {
     private Scanner scanner;
     private Presenter presenter;
     private boolean work;
@@ -14,7 +18,7 @@ public class ConsoleUI implements View {
 
     public ConsoleUI() {
         scanner = new Scanner(System.in);
-        presenter = new Presenter(this);
+        presenter = new Presenter(new Service<>(new FamTree<Human>(), scanner), this);
         work = true;
         menu = new MainMenu(this);
     }
@@ -53,18 +57,21 @@ public class ConsoleUI implements View {
         presenter.findIdConnect(childId, parentId);
     }
 
-//    public void addMembers() {
-//        System.out.println("Enter name your member's the family tree: ");
-//        String name = scanner.nextLine();
-//        System.out.println("Enter your gender: ");
-//        Gender gender = Gender.valueOf(scanner.nextLine());
-//        System.out.println("Enter LocalDate your member's the family tree: ");
-//        LocalDate birthDate = LocalDate.parse(scanner.nextLine());
-//        presenter.addMembers(name, gender, birthDate);
-//    }
 
-    public void getInfoTree() {
-        presenter.getInfoTree();
+    public void addMembers() {
+        System.out.println("Enter name your member's the family tree: ");
+        String name = scanner.nextLine();
+        System.out.println("Enter your gender (Male/Female): ");
+        Gender gender = Gender.valueOf(scanner.nextLine());
+        System.out.println("Enter age your member's the family tree (ear-mm-dd): ");
+        LocalDate birthdate = LocalDate.parse(scanner.nextLine());
+
+        presenter.addMembersToConsole(new Model.Human.Human(name, gender, birthdate));
+
+    }
+
+    public void getInfo() {
+        presenter.getInfo();
     }
 
     public void printMenu() {

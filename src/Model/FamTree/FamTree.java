@@ -1,14 +1,16 @@
 package Model.FamTree;
-import java.io.Serializable;
+
+import java.io.*;
 import java.util.*;
 
-public class FamTree<E extends TreeInterface<E>> implements Serializable, Iterable<E> {
+
+public class FamTree<Human extends TreeInterface<Human>> implements Serializable, Iterable<Human> {
 
     private long humanId;
-    public List<E> humanList;
+    public List<Human> humanList;
 
     public FamTree(){ this(new ArrayList<>()); }
-    public FamTree(List<E> humanList) { this.humanList = humanList;}
+    public FamTree(List<Human> humanList) { this.humanList = humanList;}
 
     public long getHumanId() {
         return humanId;
@@ -18,9 +20,9 @@ public class FamTree<E extends TreeInterface<E>> implements Serializable, Iterab
         this.humanId = humanId;
     }
 
-    public boolean addMembers(E human) {
+    public void addMembers(Human human) {
         if (human == null) {
-            return false;
+            return;
         }
         if (!humanList.contains(human)){
             humanList.add(human);
@@ -29,16 +31,14 @@ public class FamTree<E extends TreeInterface<E>> implements Serializable, Iterab
             addToParents(human);
             addToChildren(human);
 
-            return true;
         }
-        return false;
     }
 
-    public E getById(long id) {
+    public Human getById(long id) {
         if (!checkId(id)){
             return null;
         }
-        for (E human : humanList){
+        for (Human human : humanList){
             if (human.getId() == id) {
                 return human;
             }
@@ -46,15 +46,32 @@ public class FamTree<E extends TreeInterface<E>> implements Serializable, Iterab
         return null;
     }
 
-    public List<E> getSiblings(int id) {
-        E human = getById(id);
+//    public List<String> findIdConnect(long childId, long parentId) {
+//        Human child = FamTree.getById(childId);
+//        Human parent = FamTree.getById(parentId);
+//
+//        if (child != null && parent != null) {
+//            List<String> connections = new ArrayList<>();
+//            connections.add(child.getName() + " ребенок от " + parent.getName());
+//            connections.add(parent.getName() + " это родитель - " + child.getName());
+//
+//            if (child.getMarriage() != null) {
+//                connections.add(child.getName() + " в браке с " + child.getMarriage().getName());
+//            }
+//            return connections;
+//        } else { return Collections.singletonList(" Идентификаторы неверны ");
+//        }
+//    }
+
+    public List<Human> getSiblings(int id) {
+        Human human = getById(id);
         if (human == null) {
             return null;
         }
 
-        List<E> res = new ArrayList<>();
-        for (E parent: human.getParents()) {
-            for (E child: parent.getChildren()) {
+        List<Human> res = new ArrayList<>();
+        for (Human parent: human.getParents()) {
+            for (Human child: parent.getChildren()) {
                 if (!child.equals(human) && !res.contains(child)) {
                     res.add(child);
                 }
@@ -63,9 +80,9 @@ public class FamTree<E extends TreeInterface<E>> implements Serializable, Iterab
         return res;
     }
 
-    public List<E> getByName(String name) {
-        List<E> res = new ArrayList<>();
-        for (E human: humanList) {
+    public List<Human> getByName(String name) {
+        List<Human> res = new ArrayList<>();
+        for (Human human: humanList) {
             if (human.getName().equals(name)){
                 res.add(human);
             }
@@ -73,16 +90,16 @@ public class FamTree<E extends TreeInterface<E>> implements Serializable, Iterab
         return res;
     }
 
-    public boolean setWedding(long humanId1, long humanId2){
+   public boolean setWedding(long humanId1, long humanId2){// Метод свадьбы через Id
         if (checkId(humanId1) && checkId(humanId2)) {
-            E human1 = getById(humanId1);
-            E human2 = getById(humanId2);
+            Human human1 = getById(humanId1);
+            Human human2 = getById(humanId2);
             return setWedding(human1, human2);
         }
         return false;
     }
 
-    public boolean setWedding(E human1, E human2) { // Метод свадьбы переписанный
+    public boolean setWedding(Human human1, Human human2) { // Метод свадьбы переписанный
         if (human1.getMarriage() == null && human2.getMarriage() == null) {
             human1.setMarriage(human2);
             human2.setMarriage(human1);
@@ -94,14 +111,14 @@ public class FamTree<E extends TreeInterface<E>> implements Serializable, Iterab
 
     public boolean setDivorce(long eId1, long eId2){ // метод развода
         if (checkId(eId1) && checkId(eId2)) {
-            E e1 = getById(eId1);
-            E e2 = getById(eId2);
+            Human e1 = getById(eId1);
+            Human e2 = getById(eId2);
             return setDivorce(e1, e2);
         }
         return false;
     }
 
-    public boolean setDivorce(E e1, E e2) { // переписанный метод развода
+    public boolean setDivorce(Human e1, Human e2) { // переписанный метод развода
         if (e1.getMarriage() != null && e2.getMarriage() != null) {
             e1.setMarriage(null);
             e2.setMarriage(null);
@@ -113,21 +130,40 @@ public class FamTree<E extends TreeInterface<E>> implements Serializable, Iterab
 
     public boolean remove(long eId) { // метод удаления
         if (checkId(eId)) {
-            E human = getById(eId);
+            Human human = getById(eId);
             return humanList.remove(human);
         }
         return false;
     }
 
-    private void addToParents(E human) {
-        for (E parent: human.getParents()) {
+    private void addToParents(Human human) {
+        for (Human parent: human.getParents()) {
             parent.addChild(human);
         }
     }
 
-    private void addToChildren(E human) {
-        for (E child: human.getChildren()) {
+    private void addToChildren(Human human) {
+        for (Human child: human.getChildren()) {
             child.addParents(human);
+        }
+    }
+
+    public boolean save(Serializable serializable, String filePath){
+        try (ObjectOutputStream oos = new ObjectOutputStream (new FileOutputStream(filePath))) {
+            oos.writeObject(serializable);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public Object read(String filePath) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
+            return ois.readObject();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -138,7 +174,7 @@ public class FamTree<E extends TreeInterface<E>> implements Serializable, Iterab
         sb.append("В дереве ");
         sb.append(humanList.size());
         sb.append(" объектов: \n");
-        for (E human: humanList) {
+        for (Human human: humanList) {
             sb.append(human);
             sb.append("\n");
         }
@@ -157,13 +193,14 @@ public class FamTree<E extends TreeInterface<E>> implements Serializable, Iterab
     }
 
     @Override
-    public Iterator<E> iterator() {
+    public Iterator<Human> iterator() {
         return new HumanIterator();
     }
 
-    public class HumanIterator implements Iterator<E> {
+
+    public class HumanIterator implements Iterator<Human> {
         private int index;
-        private List<E> humanList;
+        private List<Human> humanList;
 
         @Override
         public boolean hasNext() {
@@ -171,7 +208,7 @@ public class FamTree<E extends TreeInterface<E>> implements Serializable, Iterab
         }
 
         @Override
-        public E next() {
+        public Human next() {
             return humanList.get(index++);
         }
     }

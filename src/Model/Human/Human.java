@@ -71,9 +71,9 @@ public class Human implements Serializable {
         this (name, gender, birthdate, null, null, null);
     }
 
-    public Human(String name, Gender gender, LocalDate birthdate, Human father, Human mother){
-        this(name, gender, birthdate, null, father, mother);
-    }
+//    public Human(String name, Gender gender, LocalDate birthdate, Human father, Human mother){
+//        this(name, gender, birthdate, null, father, mother);
+//    }
 
     public boolean addChild(Human child) {
         if (!children.contains(child)){
