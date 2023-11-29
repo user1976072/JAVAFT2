@@ -1,5 +1,7 @@
 package Model.Human;
 
+import Model.FamTree.TreeInterface;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
@@ -8,7 +10,7 @@ import java.util.List;
 
 
 
-public class Human implements Serializable {
+public class Human implements Serializable, TreeInterface<Human> {
     private long id;
     private String name;
     private Gender gender;
@@ -19,8 +21,8 @@ public class Human implements Serializable {
     public List<Human> children;
     private Human marriage;
 
-    public Human(String name, Gender gender, LocalDate birthdate, LocalDate deathdate, Human father, Human mother) {
-        id = -1;
+    public Human(int id, String name, Gender gender, LocalDate birthdate, LocalDate deathdate, Human father, Human mother) {
+        this.id = id;
         this.name = name;
         this.gender = gender;
         this.birthdate = birthdate;
@@ -67,13 +69,13 @@ public class Human implements Serializable {
         return getInfo();
     }
 
-    public Human(String name, Gender gender, LocalDate birthdate) {
-        this (name, gender, birthdate, null, null, null);
+    public Human(int id, String name, Gender gender, LocalDate birthdate) {
+        this (id, name, gender, birthdate, null, null, null);
     }
 
-//    public Human(String name, Gender gender, LocalDate birthdate, Human father, Human mother){
-//        this(name, gender, birthdate, null, father, mother);
-//    }
+    public Human(int id, String name, Gender gender, LocalDate birthdate, Human father, Human mother){
+        this(id, name, gender, birthdate, null, father, mother);
+    }
 
     public boolean addChild(Human child) {
         if (!children.contains(child)){

@@ -1,8 +1,4 @@
-import Model.FamTree.TreeInterface;
-import Model.Human.Gender;
-import Model.Human.Human;
-import Model.Writer.FileHandler;
-import Model.FamTree.FamTree;
+
 import View.ConsoleUI;
 import View.View;
 import java.time.LocalDate;

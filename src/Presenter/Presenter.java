@@ -1,26 +1,24 @@
 package Presenter;
 
-import Model.FamTree.TreeInterface;
-import Model.Human.Human;
+import Model.Human.Gender;
 import Model.Service;
 import View.View;
 
+import java.time.LocalDate;
 import java.util.List;
 
-public class Presenter<Human extends TreeInterface<Human>>  {
-    private View<Human> view;
-    private Service<Human> service;
+public class Presenter  {
+    private View view;
+    private Service service;
 
-    public Presenter(View<Human> view){
+    public Presenter(View view){
         this.view = view;
-        this.service = new Service<>();
+        this.service = new Service();
     }
 
-    public void addMembers(Human human) {
-        service.addMembers((Model.Human.Human) human);
-        if(human != null) {
-            view.printAnswer("Человек добавлен");
-        } else {view.printAnswer("Ошибка при добавлении");}
+    public void addMembersCons(int id, String name, Gender gender, LocalDate birthdate) {
+        service.addMembers(id, name, gender, birthdate);
+        view.printAnswer("Человек добавлен");
 
     }
 
@@ -31,10 +29,15 @@ public class Presenter<Human extends TreeInterface<Human>>  {
         }
     }
 
-//    private void setWeddings() {
-//        service
-//        getInfoTree();
-//    }
+    public void doChildren(long parentId, int id,String childName, Gender childGender, LocalDate childBirthdate) {
+        service.doChildren(parentId, id, childName, childGender, childBirthdate);
+        view.printAnswer("Child added");
+    }
+
+    public void doMarriage(long humanId1, long humanId2) {
+        service.doMarriage(humanId1, humanId2);
+        getInfo();
+    }
 
     public void getInfo() {
         String info = service.getInfo();
@@ -50,4 +53,15 @@ public class Presenter<Human extends TreeInterface<Human>>  {
         service.sortByAge();
         getInfo();
     }
+
+    public void save() {
+        service.saveT();
+        getInfo();
+    }
+
+    public void read() {
+        service.readT();
+        getInfo();
+    }
+
 }

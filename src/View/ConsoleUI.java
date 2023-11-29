@@ -1,18 +1,14 @@
 package View;
 
-import Model.FamTree.FamTree;
-import Model.FamTree.TreeInterface;
 import Model.Human.Gender;
-import Model.Human.Human;
-import Model.Service;
 import Presenter.Presenter;
 
 import java.time.LocalDate;
 import java.util.Scanner;
 
-public class ConsoleUI<Human extends TreeInterface<Human>> implements View<Human> {
+public class ConsoleUI implements View {
     private Scanner scanner;
-    private Presenter<Human> presenter;
+    private Presenter presenter;
     private boolean work;
     private MainMenu menu;
 
@@ -49,25 +45,55 @@ public class ConsoleUI<Human extends TreeInterface<Human>> implements View<Human
         presenter.sortByName();
     }
 
+    public void save() {presenter.save();}
+
+    public void read() {presenter.read();}
+
+    public void doMarriage() {
+        System.out.println(" Введите первый Id вступающего в брак: ");
+        int humanId1 = Integer.parseInt(scanner.nextLine());
+        System.out.println(" Введите второй Id вступающего в брак: ");
+        int humanId2 = Integer.parseInt((scanner.nextLine()));
+        presenter.doMarriage(humanId1, humanId2);
+    }
+
+    public void doChildren() {
+        System.out.println(" Введите Id родителя: ");
+        String parentIdStr = scanner.nextLine();
+        int parentId = Integer.parseInt(parentIdStr);
+        System.out.println("Enter Id child: ");
+        String childIdStr = scanner.nextLine();
+        int childId = Integer.parseInt(childIdStr);
+        System.out.println(" Enter name child for added to parent: ");
+        String childName = scanner.nextLine();
+        System.out.println(" Enter child gender (Male/Female):");
+        Gender childGender = Gender.valueOf(scanner.nextLine());
+        System.out.println("Enter birthdate child for added to parent (ee-mm-dd): ");
+        LocalDate childBirthdate = LocalDate.parse(scanner.nextLine());
+        presenter.doChildren(parentId, childId, childName, childGender, childBirthdate);
+    }
+
     public void findIdConnect() {
         System.out.println(" Введите идентификатор ребенка: ");
-        int childId = Integer.parseInt(scanner.nextLine());
+        String childIdStr = scanner.nextLine();
+        int childId = Integer.parseInt(childIdStr);
         System.out.println(" Введите идентификатор родителя: ");
-        int parentId = Integer.parseInt(scanner.nextLine());
+        String parentIdStr = scanner.nextLine();
+        int parentId = Integer.parseInt(parentIdStr);
         presenter.findIdConnect(childId, parentId);
     }
 
-
-    public void addMembers() {
+    public void addMembersCons() {
+        System.out.println(" Enter Id ");
+        String idStr = scanner.nextLine();
+        int id = Integer.parseInt(idStr);
         System.out.println("Enter name your member's the family tree: ");
         String name = scanner.nextLine();
         System.out.println("Enter your gender (Male/Female): ");
         Gender gender = Gender.valueOf(scanner.nextLine());
-        System.out.println("Enter age your member's the family tree (ear-mm-dd): ");
+        System.out.println("Enter age your member's the family tree (ee-mm-dd): ");
         LocalDate birthdate = LocalDate.parse(scanner.nextLine());
-        Model.Human.Human human = new Model.Human.Human(name, gender, birthdate);
-        presenter.addMembers((Human) human);
-
+        presenter.addMembersCons(id, name, gender, birthdate);
     }
 
     public void getInfo() {

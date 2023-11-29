@@ -8,9 +8,12 @@ public class FamTree<Human extends TreeInterface<Human>> implements Serializable
 
     private long humanId;
     public List<Human> humanList;
+//    public HashMap<Integer,Human> humanList;
 
     public FamTree(){ this(new ArrayList<>()); }
     public FamTree(List<Human> humanList) { this.humanList = humanList;}
+
+//    public FamTree(HashMap<Integer, Human> humanList) {this.humanList = humanList;}
 
     public long getHumanId() {
         return humanId;
@@ -21,6 +24,7 @@ public class FamTree<Human extends TreeInterface<Human>> implements Serializable
     }
 
     public void addMembers(Human human) {
+        humanList.add(human);
         if (human == null) {
             return;
         }
@@ -46,22 +50,6 @@ public class FamTree<Human extends TreeInterface<Human>> implements Serializable
         return null;
     }
 
-//    public List<String> findIdConnect(long childId, long parentId) {
-//        Human child = FamTree.getById(childId);
-//        Human parent = FamTree.getById(parentId);
-//
-//        if (child != null && parent != null) {
-//            List<String> connections = new ArrayList<>();
-//            connections.add(child.getName() + " ребенок от " + parent.getName());
-//            connections.add(parent.getName() + " это родитель - " + child.getName());
-//
-//            if (child.getMarriage() != null) {
-//                connections.add(child.getName() + " в браке с " + child.getMarriage().getName());
-//            }
-//            return connections;
-//        } else { return Collections.singletonList(" Идентификаторы неверны ");
-//        }
-//    }
 
     public List<Human> getSiblings(int id) {
         Human human = getById(id);
@@ -148,9 +136,9 @@ public class FamTree<Human extends TreeInterface<Human>> implements Serializable
         }
     }
 
-    public boolean save(Serializable serializable, String filePath){
+    public boolean save(String filePath){
         try (ObjectOutputStream oos = new ObjectOutputStream (new FileOutputStream(filePath))) {
-            oos.writeObject(serializable);
+            oos.writeObject(this);
             return true;
         } catch (Exception e) {
             e.printStackTrace();

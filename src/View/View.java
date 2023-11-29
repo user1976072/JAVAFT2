@@ -1,15 +1,16 @@
 package View;
 
-import Model.Human.Human;
-
-public interface View<Human> {
+public interface View {
     void printAnswer(String text);
     void start();
     void findIdConnect();
-    void addMembers();
+    void addMembersCons();
     void getInfo();
     void sortByName();
     void sortByAge();
-//    void setWeddings();
+    void save();
+    void read();
+    void doMarriage();
+    void doChildren();
     void finish();
 }
